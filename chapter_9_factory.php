@@ -44,36 +44,37 @@ class MegaApptEncoder extends ApptEncoder{
 }
 
 // 负责生成ApptEncoder子类对象
-class CommsManager{
-    const BLOG = 1;
-    const MEGA = 2;
-    private $mode = 1;
+abstract class CommsManager{
+    abstract function getHeaderText();
+    abstract function getApptEncoder();
+    abstract function getFooterText();
+}
 
-    function __construct($mode){
-        $this->mode = $mode;
-    }
-
-    function getApptEncoder(){
-        switch ($this->mode){
-            case(self::MEGA):
-                return new MegaApptEncoder();
-            default:
-                return new BlogsApptEncoder();
-        }
-    }
-
+class BlogsCommsManager extends CommsManager{
     function getHeaderText(){
-        switch($this->mode){
-            case(self::MEGA):
-                return "MegaCal header\n";
-            default:
-                return "Blog header\n";
-        }
+        return "Blogs header\n";
+    }
+    function getApptEncoder(){
+        return new BlogsApptEncoder();
+    }
+    function getFooterText(){
+        return "Blogs footer\n";
     }
 }
 
+class MegaCommsManager extends CommsManager{
+    function getHeaderText(){
+        return "Mega header\n";
+    }
+    function getApptEncoder(){
+        return new MegaApptEncoder();
+    }
+    function getFooterText(){
+        return "Mega footer\n";
+    }
+}
 // 使用示例
-$common = new CommsManager(CommsManager::MEGA);
-$appEncoder = $common->getApptEncoder();
+$blogComms = new BlogsCommsManager();
+$appEncoder = $blogComms->getApptEncoder();
 echo $appEncoder->encode();
 // 输出： Appointment data encoded in MegaCal format
