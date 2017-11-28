@@ -43,11 +43,44 @@ class MegaApptEncoder extends ApptEncoder{
     }
 }
 
+// 添加：todoEncoder
+abstract class TodoEncoder{
+    abstract function encode();
+}
+class BlogsTodoEncoder extends TodoEncoder{
+    function encode(){
+        return "blog todo encoder\n";
+    }
+}
+class MegaTodoEncoder extends TodoEncoder{
+    function encode(){
+        return "mega todo encoder\n";
+    }
+}
+
+// 添加：contactEncoder
+abstract class ContactEncoder{
+    abstract function encode();
+}
+class BlogsContactEncoder extends ContactEncoder{
+    function encode(){
+        return "blog contact encoder\n";
+    }
+}
+
+class MegaContactEncoder extends ContactEncoder{
+    function encode(){
+        return "mega contact encoder\n";
+    }
+}
+
 // 负责生成ApptEncoder子类对象
 abstract class CommsManager{
     abstract function getHeaderText();
     abstract function getApptEncoder();
     abstract function getFooterText();
+    abstract function getTodoEncoder();
+    abstract function getContactEncoder();
 }
 
 class BlogsCommsManager extends CommsManager{
@@ -60,6 +93,12 @@ class BlogsCommsManager extends CommsManager{
     function getFooterText(){
         return "Blogs footer\n";
     }
+    function getTodoEncoder(){
+        return new BlogsTodoEncoder();
+    }
+    function getContactEncoder(){
+        return new BlogsContactEncoder();
+    }
 }
 
 class MegaCommsManager extends CommsManager{
@@ -71,6 +110,12 @@ class MegaCommsManager extends CommsManager{
     }
     function getFooterText(){
         return "Mega footer\n";
+    }
+    function getTodoEncoder(){
+        return new MegaTodoEncoder();
+    }
+    function getContactEncoder(){
+        return new MegaContactEncoder();
     }
 }
 // 使用示例
