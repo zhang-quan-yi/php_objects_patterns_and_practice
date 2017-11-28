@@ -61,6 +61,15 @@ class CommsManager{
                 return new BlogsApptEncoder();
         }
     }
+
+    function getHeaderText(){
+        switch($this->mode){
+            case(self::MEGA):
+                return "MegaCal header\n";
+            default:
+                return "Blog header\n";
+        }
+    }
 }
 
 // 使用示例
