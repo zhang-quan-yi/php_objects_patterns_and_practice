@@ -20,8 +20,14 @@ class LaserCannonUnit extends Unit{
 }
 
 // 定义一个类来组合战斗单元
+// 新需求： 军队的合并
 class Army{
     private $units = [];
+    private $armies = [];
+
+    function addArmy(Army $army){
+        array_push($this->armies,$army);
+    }
 
     function addUnit(Unit $unit){
         array_push($this->units,$unit);
@@ -31,6 +37,10 @@ class Army{
         $strength = 0;
         foreach($this->units as $unit){
             $strength +=$unit->bombardStrength();
+        }
+
+        foreach($this->armies as $army){
+            $strength +=$army->bombardStrength();
         }
         return $strength;
     }
