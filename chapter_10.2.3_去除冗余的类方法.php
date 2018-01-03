@@ -14,7 +14,7 @@ abstract class ContainerUnit extends Unit{
     }
 
     function addUnit(Unit $unit){
-        if(!in_array($this->units,$unit)){
+        if(!in_array($unit,$this->units)){
             array_push($this->units,$unit);
         }
     }
