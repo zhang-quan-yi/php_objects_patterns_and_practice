@@ -15,6 +15,16 @@ class LoginCommand extends Command{
     }
 }
 
+class FeedbackCommand extends Command{
+    function execute(CommandContext $context){
+        $email = $context->get('email');
+        $msg = $context->get('msg');
+        $topic = $context->get('topic');
+        $result = "send msg to database: $email|$msg|$topic";
+        return $result;
+    }
+}
+
 class CommandContext{
     private $params = [];
     private $error = "";
